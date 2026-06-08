@@ -1,0 +1,29 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        # setting up windows, seeing if itinial windows match 
+        window_len = len(s1)
+
+        if window_len > len(s2):
+            return False 
+        
+        target = Counter(s1)
+
+        window = Counter(s2[:window_len])
+
+        if target == window:
+            return True 
+        
+        for right in range(window_len, len(s2)):
+            left = right - window_len
+
+            window[s2[left]] -= 1
+
+            window[s2[right]] += 1 
+
+            if window[s2[left]] == 0:
+                del window[s2[left]]
+            
+            if window == target:
+                return True 
+        return False 
+        
